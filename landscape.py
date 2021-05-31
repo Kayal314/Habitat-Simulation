@@ -36,25 +36,29 @@ class Landform:
 
 class Grassland(Landform):
     def __init__(self):
-        super(Grassland, self).__init__([(100, 100), (200, 200), (300, 300)], 500, 0, 0, 0)
+       super(Grassland, self).__init__([(953, 113), (467, 383), (899,522),(945,888),(1676,276)], 500, 0, 0, 0)
 
 
-# TODO: initialize the following classes in the same way with actual values @Sriyansh
 class Forest(Landform):
-    pass
+    def __init__(self):
+       super(Forest, self).__init__([(348, 163), (1326, 259), (1705,586),(633,701),(290,856)], 500, 0, 0, 0)
 
 
 class Lake(Landform):
-    pass
+    def __init__(self):
+       super(Lake, self).__init__([(1591, 878), (346,587)], 500, 0, 0, 0)
 
 
 class Pond(Landform):
-    pass
+    def __init__(self):
+       super(Pond, self).__init__([(487,198),(1330,68),(1438,487)], 500, 0, 0, 0)
 
 
 class Quagmire(Landform):
-    pass
+    def __init__(self):
+       super(Quagmire, self).__init__([(98, 330), (1158, 533)], 500, 0, 0, 0)
 
 
 class Rugged(Landform):
-    pass
+    def __init__(self):
+       super(Rugged, self).__init__([(923,266),(1438,659)], 500, 0, 0, 0)
