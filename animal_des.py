@@ -27,8 +27,19 @@ class Animal(abc.ABC):
     def get_position_in_food_chain(self):
         return self.__position_in_food_chain
 
-    def find_current_need(self):
-        pass
+    def find_current_need(self) -> str:
+        if self.hunger >= self.thirst and self.hunger >= self.mating_urge and self.hunger >= self.predator_fear:
+            self.find_food()
+            return 'H'
+        elif self.thirst >= self.hunger and self.thirst >= self.mating_urge and self.thirst >= self.predator_fear:
+            self.find_water()
+            return 'T'
+        elif self.mating_urge >= self.hunger and self.mating_urge >= self.thirst and self.mating_urge >= self.predator_fear:
+            self.find_mate()
+            return 'M'
+        else:
+            self.evade_predator()
+            return 'P'
 
     def get_location(self):
         return self.X, self.Y
