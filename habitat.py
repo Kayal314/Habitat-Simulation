@@ -33,6 +33,8 @@ class Habitat:
             else:
                 rabbit.find_mate(rabbit=self.__rabbits)
 
+        # TODO: mechanism to display death of rabbit
+
         for fox in self.__foxes:
             need = fox.find_current_need()
             if need.__eq__('H'):
@@ -42,8 +44,9 @@ class Habitat:
             else:
                 fox.find_mate(fox=self.__foxes)
 
-        new_members_rabbit =[]
-        new_members_fox =[]
+
+        new_members_rabbit = []
+        new_members_fox = []
         for rabbit in self.__rabbits:
             new_born = rabbit.check_current_location(grassland=self.__grassland, rabbit=self.__rabbits,
                                                      lake=self.__lake,
@@ -51,12 +54,16 @@ class Habitat:
                                                      forest=self.__forest)
             if new_born:
                 new_members_rabbit.append(new_born)
+            if rabbit.check_if_dead():
+                self.__rabbits.remove(rabbit)
         for fox in self.__foxes:
             new_born = fox.check_current_location(rabbit=self.__rabbits, lake=self.__lake,
                                                   pond=self.__pond, quagmire=self.__quagmire, rugged=self.__rugged,
                                                   fox=self.__foxes)
             if new_born:
                 new_members_fox.append(new_born)
+            if fox.check_if_dead():
+                self.__foxes.remove(fox)
 
         self.__rabbits.extend(new_members_rabbit)
         self.__foxes.extend(new_members_fox)
