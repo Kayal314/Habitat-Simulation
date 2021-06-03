@@ -7,18 +7,18 @@ class Landform:
     """
 
     def __init__(self, locations: list, food: float, water: float):
-        self.__locations = locations
-        self.__food = food
-        self.__water = water
+        self.locations = locations
+        self.food = food
+        self.water = water
 
     def get_locations(self):
-        return self.__locations
+        return self.locations
 
     def get_water_amount(self):
-        return self.__water
+        return self.water
 
     def get_food_amount(self):
-        return self.__food
+        return self.food
 
 
 
@@ -27,7 +27,7 @@ class Grassland(Landform):
         super(Grassland, self).__init__([(953, 113), (467, 383), (899, 522), (945, 888), (1676, 276)], 500, 0)
 
     def decrement_food(self):
-        self.__food -= 7
+        self.food -= 7
 
 
 class Forest(Landform):
@@ -35,7 +35,7 @@ class Forest(Landform):
         super(Forest, self).__init__([(348, 163), (1326, 259), (1705, 586), (633, 701), (290, 856)], 400, 50)
 
     def decrement_food(self):
-        self.__food -= 5
+        self.food -= 5
 
 
 class Lake(Landform):
@@ -43,7 +43,7 @@ class Lake(Landform):
         super(Lake, self).__init__([(1591, 878), (346, 587)], 0, 500)
 
     def decrement_water(self):
-        self.__food -= 7
+        self.water -= 7
 
 
 class Pond(Landform):
@@ -51,7 +51,7 @@ class Pond(Landform):
         super(Pond, self).__init__([(487, 198), (1330, 68), (1438, 487)], 0, 50)
 
     def decrement_water(self):
-        self.__food -= 5
+        self.water -= 5
 
 
 class Quagmire(Landform):
@@ -62,4 +62,3 @@ class Quagmire(Landform):
 class Rugged(Landform):
     def __init__(self):
         super(Rugged, self).__init__([(923, 266), (1438, 659)], 0, 0)
-
