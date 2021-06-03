@@ -2,8 +2,6 @@ import abc
 import random
 import math
 
-STEP = 5
-
 
 class Animal(abc.ABC):
     """
@@ -16,7 +14,8 @@ class Animal(abc.ABC):
         p = position in the food chain
     """
 
-    def __init__(self, hunger: float, thirst: float, mating_urge: float, predator_fear: float, position: int):
+    def __init__(self, hunger: float, thirst: float, mating_urge: float, predator_fear: float, position: int,
+                 step: int):
         self.age = 0
         self.hunger = hunger
         self.thirst = thirst
@@ -25,33 +24,43 @@ class Animal(abc.ABC):
         self.__position_in_food_chain = position
         self.X = random.randint(0, 1000)
         self.Y = random.randint(0, 800)
-        self.image = None
-
-    def set_image(self, image):
-        self.image = image
+        self.age = 0
+        self.STEP = step
 
     def get_position_in_food_chain(self):
         return self.__position_in_food_chain
 
     def find_current_need(self) -> str:
-        if self.hunger >= self.thirst and self.hunger >= self.mating_urge and self.hunger >= self.predator_fear:
-            return 'H'
-        elif self.thirst >= self.hunger and self.thirst >= self.mating_urge and self.thirst >= self.predator_fear:
-            return 'T'
-        elif self.mating_urge >= self.hunger and self.mating_urge >= self.thirst and self.mating_urge >= \
-                self.predator_fear:
-            return 'M'
+        if self.hunger >= self.thirst and self.hunger >= self.mating_urge:
+            need = 'H'
+        elif self.thirst >= self.hunger and self.thirst >= self.mating_urge:
+            need = 'T'
+        else:
+            need = 'M'
+        self.update_self()
+        return need
+
+    @abc.abstractmethod
+    def update_self(self):
+        pass
 
     def get_location(self):
         return self.X, self.Y
+
+    def set_location(self, x, y):
+        self.X = x
+        self.Y = y
 
     def calculate_dist(self, pos: tuple):
         return ((pos[0] - self.X) ** 2 + (pos[1] - self.Y) ** 2) ** 0.5
 
     def take_small_step(self, pos: tuple):
-        angle = math.atan((float(pos[1] - self.Y)) / (pos[0] - self.X))
-        self.X = self.X + STEP * math.cos(angle)
-        self.Y = self.Y + STEP * math.sin(angle)
+        if pos[0] == self.X:
+            angle = math.pi / 2
+        else:
+            angle = math.atan((float(pos[1] - self.Y)) / (pos[0] - self.X))
+        self.X = self.X + self.STEP * math.cos(angle)
+        self.Y = self.Y + self.STEP * math.sin(angle)
 
     @abc.abstractmethod
     def find_food(self, **kwargs):
@@ -73,10 +82,14 @@ class Animal(abc.ABC):
     def check_current_location(self, **kwargs):
         pass
 
+    @abc.abstractmethod
+    def check_if_dead(self):
+        pass
+
 
 class Rabbit(Animal):
     def __init__(self):
-        super(Rabbit, self).__init__(1, 1, 0, 1, 1)
+        super(Rabbit, self).__init__(1, 1, 0, 1, 1, 10)
 
     def find_food(self, **kwargs):
         grasslands = kwargs.get('grassland')
@@ -125,8 +138,10 @@ class Rabbit(Animal):
         self.take_small_step(min_pos)
 
     def mating_successful(self, animal) -> bool:
-        return random.random() < 0.5
-        # TODO: devise a mating mechanism
+        is_successful = self.mating_urge > 5 and animal.mating_urge > 5
+        self.mating_urge = 0
+        animal.mating_urge = 0
+        return is_successful
 
     def check_current_location(self, **kwargs):
         rabbits = kwargs.get('rabbit')
@@ -177,13 +192,23 @@ class Rabbit(Animal):
         for rabbit in rabbits:
             if self.calculate_dist(rabbit.get_location()) < 100:
                 if self.mating_successful(rabbit):
-                    return Rabbit()
+                    new_born = Rabbit()
+                    new_born.set_location((self.X + rabbit.X) / 2, (self.Y + rabbit.Y) / 2)
+                    return new_born
 
+    def check_if_dead(self):
+        return self.thirst > 20 or self.hunger > 25 or self.age > 5
+
+    def update_self(self):
+        self.hunger += 0.5
+        self.thirst += 0.6
+        self.mating_urge += 0.4
+        self.age += 0.1
 
 
 class Fox(Animal):
     def __init__(self):
-        super(Fox, self).__init__(1, 1, 0, 1, 1)
+        super(Fox, self).__init__(1, 1, 0, 1, 1, 15)
 
     def find_food(self, **kwargs):
         rabbits = kwargs.get('rabbit')
@@ -225,9 +250,10 @@ class Fox(Animal):
         self.take_small_step(min_pos)
 
     def mating_successful(self, animal) -> bool:
-        return random.random() < 0.4
-        # TODO: devise a mating mechanism based of mating urge
-        # if successful, then 0 the mating urge
+        is_successful = self.mating_urge > 5 and animal.mating_urge > 5
+        self.mating_urge = 0
+        animal.mating_urge = 0
+        return is_successful
 
     def check_current_location(self, **kwargs):
         rabbits = kwargs.get('rabbit')
@@ -237,10 +263,10 @@ class Fox(Animal):
         rugged = kwargs.get('rugged')
         foxes = kwargs.get('fox')
         for rabbit in rabbits:
-            if self.calculate_dist(rabbit.get_location) < 100:
+            if self.calculate_dist(rabbit.get_location()) < 100:
                 if self.hunger > 0:
                     self.hunger -= 15
-                    rabbit.hunger += 1000  # kill off the rabbit
+                    rabbit.age += 100  # kill the rabbit
                     return None
 
         for loc in lake.get_locations():
@@ -272,5 +298,15 @@ class Fox(Animal):
         for fox in foxes:
             if self.calculate_dist(fox.get_location()) < 100:
                 if self.mating_successful(fox):
-                    return Fox()
+                    new_born = Fox()
+                    new_born.set_location((self.X + fox.X) / 2, (self.Y + fox.Y) / 2)
+                    return new_born
 
+    def check_if_dead(self):
+        return self.thirst > 30 or self.hunger > 35 or self.age > 3
+
+    def update_self(self):
+        self.hunger += 0.4
+        self.thirst += 0.5
+        self.mating_urge += 0.3
+        self.age += 0.1
