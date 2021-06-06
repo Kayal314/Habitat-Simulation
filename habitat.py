@@ -32,6 +32,10 @@ class Habitat:
                 rabbit.find_water(lake=self.__lake, pond=self.__pond)
             else:
                 rabbit.find_mate(rabbit=self.__rabbits)
+        self.grassland.food+= 1
+        self.pond.water+=2
+        self.forest.food+=1
+        self.lake.water+=2
 
         # TODO: mechanism to display death of rabbit
 
