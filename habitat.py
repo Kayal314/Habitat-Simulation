@@ -8,19 +8,22 @@ class Habitat:
         self.__rabbits = []
         for i in range(0, initial_rabbit_count):
             new_rabbit = Rabbit()
-            new_rabbit.genetics.step_size = random.randint(15, 25)
-            new_rabbit.genetics.mating_requirement = random.random() * 2
-            new_rabbit.genetics.hunger_resistance = random.random() / 2.0
-            new_rabbit.genetics.thirst_resistance = random.random() / 2.0
+            new_rabbit.genetics.step_size = random.randint(15, 35)
+            new_rabbit.genetics.mating_requirement = random.random() * 4
+            new_rabbit.genetics.hunger_resistance = random.random()
+            new_rabbit.genetics.thirst_resistance = random.random()
+            new_rabbit.genetics.predator_fear = random.random() * 4
+            new_rabbit.genetics.vision = random.randint(120, 200)
             self.__rabbits.append(new_rabbit)
         self.__foxes = []
         for i in range(0, initial_fox_count):
             new_fox = Fox()
-            new_fox.genetics.step_size = random.randint(10, 30)
-            new_fox.genetics.mating_requirement = random.random() * 3
-            new_fox.genetics.hunting_skill = random.randint(10, 100)
-            new_fox.genetics.hunger_resistance = random.random()
-            new_fox.genetics.thirst_resistance = random.random()
+            new_fox.genetics.step_size = random.randint(20, 35)
+            new_fox.genetics.mating_requirement = random.random() * 5
+            new_fox.genetics.hunting_skill = random.randint(130, 260)
+            new_fox.genetics.hunger_resistance = random.random() / 2.0
+            new_fox.genetics.thirst_resistance = random.random() / 2.0
+            new_fox.genetics.vision = random.randint(120, 280)
             self.__foxes.append(new_fox)
         self.__grassland = Grassland()
         self.__forest = Forest()
@@ -92,9 +95,17 @@ class Habitat:
         self.__rabbits.extend(new_members_rabbit)
         self.__foxes.extend(new_members_fox)
 
-        self.__pond.water += 0.6
-        self.__lake.water += 0.5
-        self.__grassland.food += 0.5
-        self.__forest.food += 0.7
+        self.__pond.water += 2
+        self.__lake.water += 1.5
+        self.__grassland.food += 2.5
+        self.__forest.food += 1
+        if self.__pond.water > 200:
+            self.__pond.water = 200
+        if self.__lake.water > 300:
+            self.__lake.water = 300
+        if self.__forest.food > 250:
+            self.__forest.food = 250
+        if self.__grassland.food > 300:
+            self.__grassland.food = 300
 
         return dead_animals
