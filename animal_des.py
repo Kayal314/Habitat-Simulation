@@ -316,10 +316,4 @@ class Fox(Animal):
                     return new_born
 
     def check_if_dead(self):
-        if self.thirst > 40:
-            print("thirst")
-        elif self.hunger > 35:
-            print("hunger")
-        elif self.age > 10:
-            print("age", self.age)
         return self.thirst > 40 or self.hunger > 35 or self.age > 10
