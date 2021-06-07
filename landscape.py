@@ -24,26 +24,26 @@ class Landform:
 
 class Grassland(Landform):
     def __init__(self):
-        super(Grassland, self).__init__([(953, 113), (467, 383), (899, 522), (945, 888), (1676, 276)], 20, 0)
+        super(Grassland, self).__init__([(953, 113), (467, 383), (899, 522), (945, 888), (1676, 276)], 300, 0)
 
     def decrement_food(self):
-        self.food -= 15
+        self.food -= 2
 
 
 class Forest(Landform):
     def __init__(self):
-        super(Forest, self).__init__([(348, 163), (1326, 259), (1705, 586), (633, 701), (290, 856)], 100, 50)
+        super(Forest, self).__init__([(348, 163), (1326, 259), (1705, 586), (633, 701), (290, 856)], 250, 0)
 
     def decrement_food(self):
-        self.food -= 10
+        self.food -= 3
 
 
 class Lake(Landform):
     def __init__(self):
-        super(Lake, self).__init__([(1591, 878), (346, 587)], 0, 500)
+        super(Lake, self).__init__([(1591, 878), (346, 587)], 0, 300)
 
     def decrement_water(self):
-        self.water -= 30
+        self.water -= 3
 
 
 class Pond(Landform):
@@ -51,7 +51,7 @@ class Pond(Landform):
         super(Pond, self).__init__([(487, 198), (1330, 68), (1438, 487)], 0, 200)
 
     def decrement_water(self):
-        self.water -= 20
+        self.water -= 4
 
 
 class Quagmire(Landform):
