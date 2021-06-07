@@ -7,7 +7,7 @@ background = pygame.image.load('map.png')
 rabbit_img = pygame.image.load('Sprites/rabbit.png')
 fox_img = pygame.image.load('Sprites/fox.png')
 grave_img = pygame.image.load('Sprites/grave.png')
-habitat = Habitat(10, 3)
+habitat = Habitat(20, 7)
 rabbit_population = []
 fox_population = []
 grassland = []
@@ -59,6 +59,7 @@ def run_with_visualisation(num_times: int):
         dead_animals = habitat.update()
         pygame.display.update()
     plot_all(grassland=grassland, forest=forest, pond=pond, lake=lake, rabbit=rabbit_population, fox=fox_population)
+    write(grassland=grassland, forest=forest, pond=pond, lake=lake, rabbit=rabbit_population, fox=fox_population)
 
 
 def run_without_visualisation(num_times: int):
@@ -70,7 +71,10 @@ def run_without_visualisation(num_times: int):
         lake.append(habitat.get_lake_res())
         pond.append(habitat.get_pond_res())
         dead_animals = habitat.update()
-    plot_all(grassland=grassland, forest=forest, pond=pond, lake=lake, rabbit=rabbit_population, fox=fox_population)
+    plot_animal_population(rabbit_population, fox_population)
+    plot_resource_changes(grassland=grassland, forest=forest, pond=pond, lake=lake)
+    write(grassland=grassland, forest=forest, pond=pond, lake=lake, rabbit=rabbit_population, fox=fox_population)
 
 
-run_with_visualisation(500)
+run_without_visualisation(100)
+
