@@ -5,8 +5,11 @@ class Genetics:
         self.hunting_skill = 0  # only for foxes
         self.thirst_resistance = 0
         self.hunger_resistance = 0
+        self.predator_fear = 0  # only for rabbits
+        self.vision = 0
 
     def __str__(self):
         details = str(self.mating_requirement) + ":" + str(self.step_size) + ":" + str(self.hunting_skill) + ":" \
-                  + str(self.thirst_resistance) + ":" + str(self.hunger_resistance)
+                  + str(self.thirst_resistance) + ":" + str(self.hunger_resistance) + ":"+str(self.predator_fear) \
+                  + str(self.vision)
         return details
