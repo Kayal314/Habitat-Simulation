@@ -1,5 +1,5 @@
-<p>Idea:<br>
-Simulation of evolution in a three-tier ecosystem by randomly assigning genetic traits to the initial population.<br></p>
+<p>Abstract:<br>
+We simulate evolution in a three-tier ecosystem by randomly assigning genetic traits to the initial population. Hence, we <b>study the variation of the genetic traits of animals each generation</b>. Darwin's theory of natural selection states that "the fittest survive". Assuming it is a tautology, we can study the average genetic traits at the end of the simulation and <b>determine the "fitter" characteristics of animals</b>. Futher, the simulation shall help to visualize the process of evolution (variation of genetics, population, strain on natural resources, etc) in a simple and comprehensive way. Increasing or decreasing the variation in the initial population can produce drastic changes to the population curve. Hence, we study the <b>relationship between initial variation and successful population curve</b><br></p>
 <p>
 Structure of ecosystem:<br>
 The ecosystem consists of producers (autotrophic) (plants), primary consumers (rabbits), and secondary consumers (foxes)<br>
@@ -60,7 +60,10 @@ genetic traits of the parents. Thus, only the fittest may survive and genetics m
 <p>
 Procedure:
 We can implement more variation (or more randomly generated traits) in the initial population. Tweaking the randomness even a minute amount can produce drastically 
-different results (as seen by the graphs plotted by stats.py). We can study and the variation of the genetics each generation and see if the "fittest" do survive</p>
+  different results (as seen by the graphs plotted by <i>stats.py</i>)
+We can study the variation of the natural resources as population of animals changes with time as shown by  <i>plot_resource_changes(parameters)</i> method in <i>stats.py</i>
+We have to use different types of randomly generated traits and study the numerous possibilities and try to decipher the relationship between variation and population.
+</p>
 
 
  
