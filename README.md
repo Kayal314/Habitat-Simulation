@@ -55,7 +55,7 @@ We define an animal as a six-tuple (A, H, T, M, p, G) where:<br>
 <p>
 Mechanism of variation:<br>
 The initial population is given randomly generated characteristics (genetics). As the animals mate, the offspring gets a mean of all the 
-genetic traits of the parents. Thus, only the fittest may survive and genetics may therby evolve (eliminating the weaker species)</p>
+genetic traits of the parents. Thus, only the fittest may survive and genetics may thereby evolve (eliminating the weaker species)</p>
 
 <p>
 Procedure:
