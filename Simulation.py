@@ -14,6 +14,8 @@ grassland = []
 lake = []
 pond = []
 forest = []
+variance_of_genes_rabbit = []
+variance_of_genes_fox = []
 
 
 def show_foxes(foxes, screen):
@@ -57,6 +59,8 @@ def run_with_visualisation(num_times: int):
         lake.append(habitat.get_lake_res())
         pond.append(habitat.get_pond_res())
         dead_animals = habitat.update()
+        variance_of_genes_rabbit.append(find_genetic_variation_rabbit(habitat.get_rabbits()))
+        variance_of_genes_fox.append(find_genetic_variation_fox(habitat.get_foxes()))
         pygame.display.update()
     plot_all(grassland=grassland, forest=forest, pond=pond, lake=lake, rabbit=rabbit_population, fox=fox_population)
     write(grassland=grassland, forest=forest, pond=pond, lake=lake, rabbit=rabbit_population, fox=fox_population)
@@ -71,10 +75,14 @@ def run_without_visualisation(num_times: int):
         lake.append(habitat.get_lake_res())
         pond.append(habitat.get_pond_res())
         dead_animals = habitat.update()
+        variance_of_genes_rabbit.append(find_genetic_variation_rabbit(habitat.get_rabbits()))
+        variance_of_genes_fox.append(find_genetic_variation_fox(habitat.get_foxes()))
+
     plot_animal_population(rabbit_population, fox_population)
     plot_resource_changes(grassland=grassland, forest=forest, pond=pond, lake=lake)
+    plot_variance_fox(variance_of_genes_fox)
+    plot_variance_rabbit(variance_of_genes_rabbit)
     write(grassland=grassland, forest=forest, pond=pond, lake=lake, rabbit=rabbit_population, fox=fox_population)
 
 
 run_without_visualisation(100)
-
