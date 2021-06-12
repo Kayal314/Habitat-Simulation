@@ -6,12 +6,13 @@ from genetics import Genetics
 
 class Animal(abc.ABC):
     """
-    Each animal is defined as a five-tuple (A, H, T, M, p) where:
+    Each animal is defined as a six-tuple (A, H, T, M, p, G) where:
         A = age
         H = hunger
         T = thirst
         M = urge to mate
         p = position in the food chain
+        G = genetics
     """
 
     def __init__(self, hunger: float, thirst: float, mating_urge: float, position: int,
@@ -90,7 +91,7 @@ class Animal(abc.ABC):
 
 class Rabbit(Animal):
     def __init__(self):
-        super(Rabbit, self).__init__(1, 1, 0, 1, Genetics())
+        super(Rabbit, self).__init__(1, 1, 0, 2, Genetics())
 
     def find_food(self, **kwargs):
         grasslands = kwargs.get('grassland')
@@ -144,7 +145,7 @@ class Rabbit(Animal):
         self.take_small_step(min_pos)
 
     def mating_successful(self, animal) -> bool:
-        is_successful = self.mating_urge >= 1.5 and animal.mating_urge >= 1.5
+        is_successful = self.mating_urge >= 2 and animal.mating_urge >= 2
         self.mating_urge = -1
         animal.mating_urge = -1
         return is_successful
@@ -160,28 +161,28 @@ class Rabbit(Animal):
         if grassland.food > 0:
             for loc in grassland.get_locations():
                 if self.calculate_dist(loc) < self.genetics.vision:
-                    if self.hunger > 0 and grassland.food > 0:
+                    if self.hunger > 8 and grassland.food > 0:
                         self.hunger -= 15
                         grassland.decrement_food()
                         return None
         if forest.food > 0:
             for loc in forest.get_locations():
                 if self.calculate_dist(loc) < self.genetics.vision:
-                    if self.hunger > 0 and forest.food > 0:
-                        self.hunger -= 10
+                    if self.hunger > 8 and forest.food > 0:
+                        self.hunger -= 12
                         forest.decrement_food()
                         return None
         if lake.water > 0:
             for loc in lake.get_locations():
                 if self.calculate_dist(loc) < self.genetics.vision:
-                    if self.thirst > 0:
+                    if self.thirst > 15:
                         self.thirst -= 30
                         lake.decrement_water()
                         return None
         if pond.water > 0:
             for loc in pond.get_locations():
                 if self.calculate_dist(loc) < self.genetics.vision:
-                    if self.thirst > 0:
+                    if self.thirst > 15:
                         self.thirst -= 20
                         pond.decrement_water()
                         return None
@@ -201,18 +202,7 @@ class Rabbit(Animal):
             if self.calculate_dist(rabbit.get_location()) < 100:
                 if self.mating_successful(rabbit):
                     new_born = Rabbit()
-                    new_born.genetics.step_size = int((rabbit.genetics.step_size + self.genetics.step_size) / 2.0)
-                    new_born.genetics.mating_requirement = (rabbit.genetics.mating_requirement +
-                                                            self.genetics.mating_requirement) / 2.0
-                    new_born.genetics.thirst_resistance = (self.genetics.thirst_resistance +
-                                                           rabbit.genetics.thirst_resistance) / 2.0
-                    new_born.genetics.hunger_resistance = (self.genetics.hunger_resistance +
-                                                           rabbit.genetics.hunger_resistance) / 2.0
-                    new_born.genetics.predator_fear = (self.genetics.predator_fear +
-                                                       rabbit.genetics.predator_fear) / 2.0
-                    new_born.genetics.vision = int((self.genetics.vision +
-                                                    rabbit.genetics.vision) / 2.0)
-
+                    new_born.genetics = self.genetics*rabbit.genetics
                     new_born.set_location((self.X + rabbit.X) / 2, (self.Y + rabbit.Y) / 2)
                     return new_born
 
@@ -280,21 +270,21 @@ class Fox(Animal):
         foxes = kwargs.get('fox')
         for rabbit in rabbits:
             if self.calculate_dist(rabbit.get_location()) < self.genetics.hunting_skill:
-                if self.hunger >= 0:
+                if self.hunger >= 10:
                     self.hunger -= 30
                     rabbit.age = 100  # kill the rabbit
                     return None
         if lake.water > 0:
             for loc in lake.get_locations():
                 if self.calculate_dist(loc) < self.genetics.vision:
-                    if self.thirst > 0:
+                    if self.thirst > 25:
                         self.thirst -= 35
                         lake.decrement_water()
                         return None
         if pond.water > 0:
             for loc in pond.get_locations():
                 if self.calculate_dist(loc) < self.genetics.vision:
-                    if self.thirst > 0:
+                    if self.thirst > 15:
                         self.thirst -= 20
                         pond.decrement_water()
                         return None
@@ -315,16 +305,7 @@ class Fox(Animal):
             if self.calculate_dist(fox.get_location()) < self.genetics.vision:
                 if self.mating_successful(fox):
                     new_born = Fox()
-                    new_born.genetics.step_size = int((fox.genetics.step_size + self.genetics.step_size) / 2.0)
-                    new_born.genetics.mating_requirement = (fox.genetics.mating_requirement +
-                                                            self.genetics.mating_requirement) / 2.0
-                    new_born.genetics.hunting_skill = int((fox.genetics.hunting_skill +
-                                                           self.genetics.hunting_skill) / 2.0)
-                    new_born.genetics.hunger_resistance = (fox.genetics.hunger_resistance +
-                                                           self.genetics.hunger_resistance) / 2.0
-                    new_born.genetics.thirst_resistance = (fox.genetics.thirst_resistance +
-                                                           self.genetics.thirst_resistance) / 2.0
-                    new_born.genetics.vision = int((fox.genetics.vision + self.genetics.vision) / 2.0)
+                    new_born.genetics = self.genetics * fox.genetics
                     new_born.set_location((self.X + fox.X) / 2, (self.Y + fox.Y) / 2)
                     return new_born
 
