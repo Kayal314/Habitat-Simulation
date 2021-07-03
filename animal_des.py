@@ -188,13 +188,13 @@ class Rabbit(Animal):
                         return None
 
         for loc in quagmire.get_locations():
-            if self.calculate_dist(loc) < 60:
+            if self.calculate_dist(loc) < 100:
                 self.hunger += 2
                 self.thirst += 3
                 return None
 
         for loc in rugged.get_locations():
-            if self.calculate_dist(loc) < 60:
+            if self.calculate_dist(loc) < 100:
                 self.hunger += 3
                 self.thirst += 4
                 return None
@@ -207,7 +207,7 @@ class Rabbit(Animal):
                     return new_born
 
     def check_if_dead(self):
-        return self.thirst > 40 or self.hunger > 35 or self.age > 45
+        return self.thirst > 35 or self.hunger > 35 or self.age > 40
 
 
 class Fox(Animal):
@@ -290,13 +290,13 @@ class Fox(Animal):
                         return None
 
         for loc in quagmire.get_locations():
-            if self.calculate_dist(loc) < 60:
+            if self.calculate_dist(loc) < 100:
                 self.hunger += 2
                 self.thirst += 3
                 return None
 
         for loc in rugged.get_locations():
-            if self.calculate_dist(loc) < 60:
+            if self.calculate_dist(loc) < 100:
                 self.hunger += 3
                 self.thirst += 3
                 return None
@@ -310,4 +310,4 @@ class Fox(Animal):
                     return new_born
 
     def check_if_dead(self):
-        return self.thirst > 40 or self.hunger > 40 or self.age > 32
+        return self.thirst > 40 or self.hunger > 40 or self.age > 35
