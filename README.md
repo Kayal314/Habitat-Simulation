@@ -59,7 +59,7 @@ Say, animal A<sub>1</sub> and animal A<sub>2</sub> are taken under consideration
 Mating will be successful if and only if A<sub>1</sub>.M and A<sub>2</sub>.M are both greater than some value<br>
 Say, the offspring is animal O.<br>
 
-<p>∀ g<sub>i</sub>  ∊  O.G,  O.G.g<sub>i</sub>  =  A<sub>1</sub>.G.g<sub>i</sub>)  |  (A<sub>2</sub>.G.g<sub>i</sub> </p>
+<p>∀ g<sub>i</sub>  ∊  O.G,  O.G.g<sub>i</sub>  =  A<sub>1</sub>.G.g<sub>i</sub>  |  A<sub>2</sub>.G.g<sub>i</sub> </p>
 
 Here the c = a | b means c is assigned the value a with a 50% chance and value b with a 50% chance
 </p>
