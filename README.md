@@ -1,5 +1,6 @@
 <p>Abstract:<br>
-We simulate evolution in a three-tier ecosystem by randomly assigning genetic traits to the initial population. Hence, we <b><i>study the variation of the genetic traits of animals each generation</i></b>. Darwin's theory of natural selection states that "the fittest survive". Assuming it is a tautology, we can study the average genetic traits at the end of the simulation and <b><i>determine the "fitter" characteristics of animals</i></b>. Futher, the simulation shall help to visualize the process of evolution (variation of genetics, population, strain on natural resources, etc) in a simple and comprehensive way. Increasing or decreasing the variation in the initial population can produce drastic changes to the population curve. Hence, we study the <b><i>relationship between initial variation and the successive population curve</i></b><br></p>
+Darwin’s theory of natural selection states that individuals with genetic traits better suited to the environment survive. This could mathematically be stated as with time, the dispersion/scattering of genetic characteristics within a domain decreases as more and more of the living population tends to progress towards the fitter traits, while individuals with weaker traits are wiped out. We simulate a three tier ecosystem (autotrophs, herbivorous  primary consumers, and carnivorous secondary consumers), and study the population curve and the corresponding change in the entropy, mean-absolute deviation, median-absolute deviation, and standard deviation of the genetic characteristics. This helps to validate and visualize Darwin’s theory using simple artificial intelligence. The initial population is assorted with traits randomly and offsprings get a mixture of traits of the parents, and successive neonates inherit traits from parents. Several such simulations have been performed and the results have been presented. 
+</i></b><br></p>
 <p>
 Structure of ecosystem:<br>
 The ecosystem consists of producers (autotrophic) (plants), primary consumers (rabbits), and secondary consumers (foxes)<br>
@@ -53,17 +54,28 @@ We define an animal as a six-tuple (A, H, T, M, p, G) where:<br>
         <li>Rugged Land</li></ul>
         
 <p>
-Mechanism of variation:<br>
-The initial population is given randomly generated characteristics (genetics). As the animals mate, the offspring gets a mean of all the 
-genetic traits of the parents. Thus, only the fittest may survive and genetics may thereby evolve (eliminating the weaker species)</p>
+<b>Mating mechanism:</b><br>
+Say, animal A<sub>1</sub> and animal A<sub>2</sub> are taken under consideration<br>
+Mating will be successful if and only if A<sub>1</sub>.M and A<sub>2</sub>.M are both greater than some value<br>
+Say, the offspring is animal O.<br>
+
+<p>∀ g<sub>i</sub> ∊ O.G, O.G.g<sub>i</sub> = (A1.G.g<sub>i</sub>) | (A2.G.g<sub>i</sub>) </p>
+
+Here the c = a | b means c is assigned the value a with a 50% chance and value b with a 50% chance
+</p>
+
 
 <p>
 Procedure:
 We can implement more variation (or more randomly generated traits) in the initial population. Tweaking the randomness even a minute amount can produce drastically 
   different results (as seen by the graphs plotted by <i>stats.py</i>)
 We can study the variation of the natural resources as population of animals changes with time as shown by  <i>plot_resource_changes(parameters)</i> method in <i>stats.py</i>
-We have to use different types of randomly generated traits and study the numerous possibilities and try to decipher the relationship between variation and population.
+We have to use different types of randomly generated traits and study the numerous possibilities and try to decipher the relationship between the degree of dispersion of genetic traits and population.
 </p>
+<p>Methods are also provided to visualize the evolution process through the <i>run_with_visualisation(num_times: int)</i> method. The visualization should like this:</p>
+<p align="center"><img src="screenshot.png"></p>
+
+
 
 
  
